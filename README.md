@@ -9,4 +9,4 @@ Using GeoJSON data on recent earthquakes, maps were generated in various styles 
 <img width="1915" alt="major_earthquakes_satellite_view" src="https://user-images.githubusercontent.com/111674383/217047717-31c8b19d-118a-4195-89d2-365f80ff4eb9.png">
 
 ### Both Map Layers Combined - Street View
-<img width="1915" alt="earthquakes_outdoor_view" src="https://user-images.githubusercontent.com/111674383/217047047-e578c436-363f-44cc-b93c-7e910c6ac75b.png">
+<img width="1915" alt="all_earthquakes_street_view" src="https://user-images.githubusercontent.com/111674383/217048401-b8d94042-e528-48f1-9675-9300ed032a9c.png">
