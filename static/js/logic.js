@@ -1,21 +1,21 @@
-// Add console.log to check to see if our code is working.
+// Add console.log to check to see if code is working.
 console.log("working");
 
-// We create the tile layer that will be the background of our map.
+// Create the tile layer that will be the background of the map
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
 	accessToken: API_KEY
 });
 
-// We create the second tile layer that will be the background of our map.
+// Create the second tile layer that will be the background of the map
 let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
 	accessToken: API_KEY
 });
 
-// We create the third tile layer that will be the background of our map.
+// Create the third tile layer that will be the background of the map.
 let outdoors = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
@@ -38,28 +38,26 @@ let baseMaps = {
 };
 
 let allEarthquakes = new L.LayerGroup();
-// 1. Add a 2nd layer group for the tectonic plate data.
+// Add a 2nd layer group for the tectonic plate data.
 let tPlates = new L.LayerGroup();
-// 1. Add a 3rd layer group for the major earthquake data.
+// Add a 3rd layer group for the major earthquake data.
 let majorQuakes = new L.LayerGroup();
 
-// 2. Add a reference to the tectonic plates group to the overlays object.
+// Add a reference to the tectonic plates group to the overlays object.
 let overlays = {
   "Earthquakes": allEarthquakes,
   "Tectonic Plates": tPlates,
   "Major Earthquakes": majorQuakes
 };
 
-// Then we add a control to the map that will allow the user to change which
-// layers are visible.
+// Add a control to the map for user to change which layers are visible.
 L.control.layers(baseMaps, overlays).addTo(map);
 
 // Retrieve the earthquake GeoJSON data.
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
 
-  // This function returns the style data for each of the earthquakes we plot on
-  // the map. We pass the magnitude of the earthquake into two separate functions
-  // to calculate the color and radius.
+  // This function returns the style data for each of the earthquakes
+  // Pass the magnitude of the earthquake into two separate functions to calculate size and color
   function styleInfo(feature) {
     return {
       opacity: 1,
@@ -72,7 +70,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     };
   }
 
-  // This function determines the color of the marker based on the magnitude of the earthquake.
+  // determine the color of the marker based on the magnitude of the earthquake
   function getColor(magnitude) {
     if (magnitude > 5) {
       return "#ea2c2c";
@@ -92,8 +90,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     return "#98ee00";
   }
 
-  // This function determines the radius of the earthquake marker based on its magnitude.
-  // Earthquakes with a magnitude of 0 were being plotted with the wrong radius.
+  // determine the radius of the earthquake marker based on its magnitude
+  // Earthquakes with a magnitude of 0 were being plotted with the wrong radius
   function getRadius(magnitude) {
     if (magnitude === 0) {
       return 1;
@@ -101,7 +99,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     return magnitude * 4;
   }
 
-  // Creating a GeoJSON layer with the earthquake data.
+  // Create a GeoJSON layer with the earthquake data
   L.geoJson(data, {
     // We turn each feature into a circleMarker on the map.
     pointToLayer: function(feature, latlng) {
